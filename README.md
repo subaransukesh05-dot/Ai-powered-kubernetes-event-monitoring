@@ -15,17 +15,23 @@ This project captures Kubernetes events (such as `ImagePullBackOff`, `ErrImagePu
 
 ## Architecture
 
+## Architecture
+
 ```text
 Kubernetes Cluster (Minikube)
-        ↓
-Python Event Watcher
-        ↓
-Ollama + Gemma 2B
-        ↓
+            ↓
+Real-Time Event Watcher (Python)
+            ↓
+Kubernetes Event Filtering
+            ↓
+Ollama + Gemma 2B (LLM)
+            ↓
 AI Root Cause Analysis
-        ↓
-Human-readable output
+            ↓
+Human-readable Explanation
 ```
+
+The system continuously watches Kubernetes cluster events using the Kubernetes Python SDK. Important failure events are sent to a local LLM through Ollama for analysis and remediation suggestions.
 
 ## Tech Stack
 
@@ -79,6 +85,20 @@ The AI explains:
 4. Suggested remediation
 
 ## Example Failure Detection
+## Demo Screenshots
+
+### Watcher Running
+
+![Watcher Running](screenshots/watcher-running.png)
+
+### Kubernetes Failure Detection (`ImagePullBackOff`)
+
+![ImagePullBackOff](screenshots/imagepullbackoff.png)
+
+### AI Root Cause Analysis
+
+![AI Analysis](screenshots/ai-analysis.png)
+
 
 Example Kubernetes failure:
 
